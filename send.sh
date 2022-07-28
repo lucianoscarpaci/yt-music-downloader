@@ -1,0 +1,1 @@
+opendrop send -r 1 -f save/*.mp3

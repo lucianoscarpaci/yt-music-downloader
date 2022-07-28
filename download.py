@@ -1,14 +1,23 @@
+from gettext import find
 from pytube import YouTube
 from pyfiglet import Figlet
 import os
-import opendrop
+import subprocess
 
 # Banner
 banner = Figlet(font='bubble')
 print(banner.renderText('YT MUSIC'))
 
+#Save path
+PATH="Save/"
+
+#run opendrop for 22 seconds
+subprocess.run(["bash", "find.sh"])
+print("Done.")
+
 # Ask to enter music link
-link = input("Enter Link >")
+print("incoming prompt ...")
+link = input("Enter the YouTube Link =>")
 
 try:
     ytube = YouTube(link)
@@ -17,18 +26,19 @@ except:
 # Audio only format
 thisVideo = ytube.streams.filter(only_audio=True).first()
 
-# destination to save file
 
 # download
 try:
-    save = thisVideo.download("")
+    save = thisVideo.download(PATH)
+    #save as mp3
+    base, ext = os.path.splitext(save)
+    save_file = base + '.mp3'
+    os.rename(save, save_file)
 except:
     print("An error was detected.")
 # print file has been successfully downloaded
-
-
+print(ytube.title + "has been successfully downloaded.")
 
 #opendrop send to receiver
-# opendrop find
-# opendrop send
+subprocess.run(["bash", "send.sh"])
 
